@@ -1,76 +1,100 @@
-<h2>🏗️ Lab Architecture</h2>
+Markdown
+
+# 🛡️ SOC Lab: Automated Threat Detection & Mitigation with Wazuh
+
+<p align="center">
+  <img src="https://img.shields.io/badge/SIEM-Wazuh-blue?style=for-the-badge&logo=wazuh" alt="Wazuh">
+  <img src="https://img.shields.io/badge/Security-IPS-red?style=for-the-badge" alt="IPS">
+  <img src="https://img.shields.io/badge/Environment-Docker-2496ED?style=for-the-badge&logo=docker" alt="Docker">
+  <img src="https://img.shields.io/badge/Framework-MITRE_ATT%26CK-orange?style=for-the-badge" alt="MITRE">
+</p>
+
+## 📝 Project Overview
+This project demonstrates the deployment of a **Security Operations Center (SOC)** environment using **Wazuh (SIEM/XDR)**. The lab is designed to detect and automatically mitigate real-world cyber attacks, such as **DDoS (HTTP Flooding)**, **SSH Brute Forcing**, and **Suspicious Windows Process Chains**, by leveraging custom detection rules and **Active Response (IPS)**.
+
+---
+
+## 🏗️ Lab Architecture
 
 <p align="center">
   <img src="img/Gemini_Generated_Image_yurqlkyurqlkyurq.png" width="800">
-</p>
-<p align="center">
-  <em>Figure 1: High-level architecture showing attacker → Wazuh → agent response.</em>
-</p>
-
-
-<h2>🛠️ Monitoring & Hygiene</h2>
-
-<p align="center">
-  <img src="img/wazuh-overview.png" width="800">
-</p>
-<p align="center">
-  <em>Figure 2: Global overview showing active agents and security events.</em>
+  <br>
+  <em>High-level architecture: Kali Linux (Attacker) ➔ Ubuntu/Windows (Agents) ➔ Wazuh Manager (Docker Analysis Engine).</em>
 </p>
 
-<p align="center">
-  <img src="img/sca-dashboard.png" width="800">
-</p>
-<p align="center">
-  <em>Figure 3: Security Configuration Assessment (SCA) results.</em>
-</p>
+### 🛠️ Components:
+* **Wazuh Manager:** Centralized engine hosted in **Docker**.
+* **Ubuntu Server:** Running **Nginx** and the Wazuh Agent.
+* **Windows 10:** Running **Sysmon** for advanced endpoint telemetry.
+* **Kali Linux:** Attacker machine using `ab`, `curl`, and `hydra`.
 
+---
 
-<h2>🚀 Attack Simulation & Detection</h2>
+## 🛠️ Monitoring & Hygiene
+
+Before launching attacks, the environment was audited for baseline security and agent health.
 
 <p align="center">
-  <img src="img/docker-running.png" width="800">
-</p>
-<p align="center">
-  <em>Figure 4: Wazuh stack running via Docker Compose.</em>
+  <img src="img/Screenshot from 2026-04-06 17-06-17.png" width="800">
+  <br>
+  <em><b>Fleet Status:</b> Monitoring active connectivity for Ubuntu and Windows 10 agents.</em>
 </p>
 
 <p align="center">
-  <img src="img/ddos-alert.png" width="800">
-</p>
-<p align="center">
-  <em>Figure 5: High-severity DDoS alert triggered by custom rule.</em>
-</p>
-
-<p align="center">
-  <img src="img/lfi-alert.png" width="800">
-</p>
-<p align="center">
-  <em>Figure 6: Detection of LFI and unauthorized sudo activity.</em>
+  <img src="img/Screenshot from 2026-04-06 17-06-37.png" width="800">
+  <br>
+  <em><b>Threat Hunting Overview:</b> Aggregated security events dashboard ready for analysis.</em>
 </p>
 
+---
 
-<h2>🛡️ Automated Mitigation</h2>
+## 🚀 Attack Simulation & Detection
+
+### 1. DDoS Attack (Nginx HTTP Flood)
+Simulated a high-volume attack from Kali Linux using Apache Benchmark (`ab`).
 
 <p align="center">
-  <img src="img/active-response.png" width="800">
-</p>
-<p align="center">
-  <em>Figure 7: Active response automatically blocking attacker IP.</em>
+  <img src="img/Screenshot from 2026-04-06 17-07-33.png" width="800">
+  <br>
+  <em><b>Alert Triggered:</b> Rule 100210 (Level 12) detecting 100+ requests in 10 seconds.</em>
 </p>
 
 
-<h2>📈 Advanced Analytics</h2>
+### 2. Web Vulnerability & OS Attacks
+
+Detecting Local File Inclusion (LFI) attempts and unauthorized administrative activity.
 
 <p align="center">
-  <img src="img/mitre-dashboard.png" width="800">
+<img src="img/Screenshot from 2026-04-06 17-33-09.png" width="800">
+
+<em><b>Events:</b> Successful detection of LFI, PAM session closures, and unauthorized sudo commands.</em>
 </p>
-<p align="center">
-  <em>Figure 8: MITRE ATT&CK mapping of detected techniques.</em>
-</p>
+🛡️ Automated Mitigation (Active Response)
+
+The lab moves from detection to prevention. When the DDoS threshold is met, the Manager commands the Agent to block the attacker's IP automatically using the firewall-drop script.
 
 <p align="center">
-  <img src="img/fim-dashboard.png" width="800">
+<img src="img/Screenshot from 2026-04-06 17-32-15.png" width="800">
+
+<em><b>IPS Action:</b> The Active Response engine confirming the automated firewall block was executed.</em>
 </p>
+
+📈 Advanced Analytics & Compliance
+MITRE ATT&CK Mapping
+
+Alerts are mapped to the MITRE framework to visualize adversary tactics.
+
 <p align="center">
-  <em>Figure 9: File Integrity Monitoring (FIM) events in real time.</em>
+<img src="img/Screenshot from 2026-04-06 17-09-15.png" width="800">
+
+<em><b>MITRE Dashboard:</b> Mapping lab events to T1110 (Brute Force) and T1190 (Exploiting Public Applications).</em>
+</p>
+File Integrity Monitoring (FIM)
+
+Tracking unauthorized changes to system configuration files in real-time.
+
+<p align="center">
+<img src="img/Screenshot from 2026-04-06 17-08-17.png" width="800">
+
+<em><b>FIM Dashboard:</b> Real-time auditing of /etc/ and other critical system directories.</em>
 </p>
