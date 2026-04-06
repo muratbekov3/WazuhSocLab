@@ -4,7 +4,7 @@
 This project demonstrates the deployment of a Security Operations Center (SOC) environment...
 🏗️ Lab Architecture
 
-    ![Wazuh Dashboard Overview](Gemini_Generated_Image_yurqlkyurqlkyurq.png)
+    ![Wazuh Dashboard Overview](WazuhSocLab/Gemini_Generated_Image_yurqlkyurqlkyurq.png)
     Figure 1: High-level architecture showing the flow from Kali (Attacker) to Wazuh (SIEM) and back to the Agent (IPS).
 
 🛠️ Key Features & Configurations
