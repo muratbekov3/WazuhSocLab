@@ -1,0 +1,96 @@
+<group name="linux,ssh,authentication_failed">
+  <rule id="100100" level="10" frequency="5" timeframe="60">
+    <if_matched_sid>5716</if_matched_sid>
+    <description>Multiple SSH login failures detected (possible brute force)</description>
+    <same_source_ip />
+  </rule>
+</group>
+
+<group name="linux,sudo,privilege">
+  <rule id="100101" level="8">
+    <if_sid>5402</if_sid>
+    <description>Sudo command executed</description>
+  </rule>
+</group>
+
+<group name="linux,commands,suspicious">
+  <rule id="100102" level="7">
+    <match>curl|wget</match>
+    <description>Suspicious network download command detected</description>
+  </rule>
+</group>
+
+<group name="linux,fim">
+  <rule id="100103" level="7">
+    <if_sid>550</if_sid>
+    <description>Important file modified</description>
+  </rule>
+</group>
+
+<group name="windows,powershell,suspicious">
+  <rule id="200001" level="10">
+    <if_sid>60009</if_sid>
+    <match>-enc|-EncodedCommand</match>
+    <description>Suspicious PowerShell encoded command</description>
+  </rule>
+</group>
+
+<group name="windows,process,attack">
+  <rule id="200002" level="9">
+    <if_sid>60009</if_sid>
+    <field name="win.eventdata.parentImage">\\cmd.exe</field>
+    <field name="win.eventdata.image">\\powershell.exe</field>
+    <description>Suspicious process chain: cmd spawning PowerShell</description>
+  </rule>
+</group>
+
+<group name="windows,authentication">
+  <rule id="200003" level="10" frequency="5" timeframe="60">
+    <if_matched_sid>60122</if_matched_sid>
+    <description>Multiple Windows login failures (possible brute force)</description>
+    <check_if_ignored>60</check_if_ignored>
+  </rule>
+</group>
+
+<group name="nginx,web,attack">
+  <rule id="100200" level="12">
+    <if_sid>31100</if_sid> <match>select|union|insert|update|delete|drop</match>
+    <description>Potential SQL Injection attempt on Nginx</description>
+  </rule>
+
+  <rule id="100201" level="12">
+    <if_sid>31100</if_sid>
+    <match>\<script|alert\(|%3Cscript</match>
+    <description>Potential XSS (Cross-Site Scripting) attempt</description>
+  </rule>
+</group>
+
+<group name="nginx,bruteforce">
+  <rule id="100202" level="10" frequency="10" timeframe="60">
+    <if_matched_sid>31101</if_matched_sid> <url>/admin|/login|/wp-login.php</url>
+    <description>Nginx: Multiple login failures on admin page</description>
+    <same_source_ip />
+  </rule>
+</group>
+
+<group name="nginx,recon">
+  <rule id="100204" level="13">
+    <if_sid>31100</if_sid>
+    <match>/etc/passwd|/etc/shadow|/windows/system32</match>
+    <description>Nginx: Local File Inclusion (LFI) attempt</description>
+  </rule>
+  
+  <rule id="100205" level="7">
+    <if_sid>31100</if_sid>
+    <match>sqlmap|nikto|gobuster|dirbuster</match>
+    <description>Nginx: Known attack tool User-Agent detected</description>
+  </rule>
+</group>
+
+<group name="nginx,dos">
+  <rule id="100210" level="12" frequency="100" timeframe="10">
+    <if_matched_sid>31101</if_matched_sid>
+    <description>Nginx: Multiple requests from same source (Possible DoS Attack)</description>
+    <same_source_ip />
+  </rule>
+</group>
