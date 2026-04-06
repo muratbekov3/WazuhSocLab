@@ -1,66 +1,76 @@
-🛡️ SOC Lab: Automated Threat Detection & Mitigation with Wazuh
-📝 Project Overview
+<h2>🏗️ Lab Architecture</h2>
 
-This project demonstrates the deployment of a Security Operations Center (SOC) environment...
-🏗️ Lab Architecture
+<p align="center">
+  <img src="img/Gemini_Generated_Image_yurqlkyurqlkyurq.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 1: High-level architecture showing attacker → Wazuh → agent response.</em>
+</p>
 
-    ![Wazuh Dashboard Overview](WazuhSocLab/Gemini_Generated_Image_yurqlkyurqlkyurq.png)
-    Figure 1: High-level architecture showing the flow from Kali (Attacker) to Wazuh (SIEM) and back to the Agent (IPS).
 
-🛠️ Key Features & Configurations
-1. Custom Detection Rules
+<h2>🛠️ Monitoring & Hygiene</h2>
 
-I developed a suite of custom rules in local_rules.xml to identify specific threats...
-2. Monitoring & Hygiene
+<p align="center">
+  <img src="img/wazuh-overview.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 2: Global overview showing active agents and security events.</em>
+</p>
 
-Before attacking, the environment is monitored for overall health and security posture.
+<p align="center">
+  <img src="img/sca-dashboard.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 3: Security Configuration Assessment (SCA) results.</em>
+</p>
 
-    [INSERT SCREENSHOT: Wazuh Overview Dashboard]
-    Figure 2: Global overview showing active agents (Ubuntu & Windows) and overall security events.
 
-    [INSERT SCREENSHOT: Security Hygiene / SCA Dashboard]
-    Figure 3: Configuration Assessment showing the "hygiene" and vulnerability status of the endpoints.
+<h2>🚀 Attack Simulation & Detection</h2>
 
-🚀 Attack Simulation & Proof of Work
-Phase 1: The Attack (Kali Linux)
+<p align="center">
+  <img src="img/docker-running.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 4: Wazuh stack running via Docker Compose.</em>
+</p>
 
-I simulated several attack vectors from a Kali Linux VM:
+<p align="center">
+  <img src="img/ddos-alert.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 5: High-severity DDoS alert triggered by custom rule.</em>
+</p>
 
-    DDoS: ab -n 10000 -c 100 http://<AGENT_IP>/
+<p align="center">
+  <img src="img/lfi-alert.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 6: Detection of LFI and unauthorized sudo activity.</em>
+</p>
 
-    LFI/Recon: curl http://<AGENT_IP>/etc/passwd
 
-    [INSERT SCREENSHOT: Docker Compose PS]
-    Figure 4: Terminal output showing the Wazuh stack running successfully in Docker.
+<h2>🛡️ Automated Mitigation</h2>
 
-Phase 2: Detection (Threat Hunting)
+<p align="center">
+  <img src="img/active-response.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 7: Active response automatically blocking attacker IP.</em>
+</p>
 
-Wazuh successfully parsed the logs and triggered high-severity alerts.
 
-    [INSERT SCREENSHOT: Threat Hunting Events - DDoS Alert]
-    Figure 5: High-severity alert for Rule 100210 (Nginx DDoS) showing the attacker's IP.
+<h2>📈 Advanced Analytics</h2>
 
-    [INSERT SCREENSHOT: Events - LFI & Sudo Attempts]
-    Figure 6: Detection of Local File Inclusion (LFI) and unauthorized sudo command execution.
+<p align="center">
+  <img src="img/mitre-dashboard.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 8: MITRE ATT&CK mapping of detected techniques.</em>
+</p>
 
-Phase 3: Mitigation (Active Response)
-
-The most critical part of the lab: the Manager automatically commanded the Agent to block the malicious IP.
-
-    [INSERT SCREENSHOT: Events - "Host blocked by firewall-drop"]
-    Figure 7: The Active Response log confirming the automated block was successful.
-
-📈 Advanced Analytics
-MITRE ATT&CK Mapping
-
-The alerts are automatically mapped to the MITRE framework for tactical analysis.
-
-    [INSERT SCREENSHOT: MITRE ATT&CK Dashboard]
-    Figure 8: Visualization of detected techniques mapped to the MITRE ATT&CK matrix.
-
-File Integrity Monitoring (FIM)
-
-I monitored sensitive system files for unauthorized changes.
-
-    [INSERT SCREENSHOT: File Integrity Monitoring Dashboard]
-    Figure 9: Real-time tracking of file modifications on the Ubuntu server.
+<p align="center">
+  <img src="img/fim-dashboard.png" width="800">
+</p>
+<p align="center">
+  <em>Figure 9: File Integrity Monitoring (FIM) events in real time.</em>
+</p>
